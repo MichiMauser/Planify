@@ -1,0 +1,68 @@
+@startuml
+' https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+boundary LoginInterface
+control UserController
+control UserService
+entity UserRepository
+database SQLDatabase
+
+== Start Interaction ==
+User -> LoginInterface: Select Login/Register/ForgotPassword/Guest
+
+== Login ==
+LoginInterface -> UserController: login(email, password)
+UserController -> UserService: geUserByEmailPass(email, password)
+UserService -> UserRepository: findByEmail(email)
+UserRepository -> SQLDatabase: query user
+SQLDatabase --> UserRepository: user found
+UserRepository --> UserService: user data
+
+alt Correct password
+    UserService --> UserController: success
+    UserController --> LoginInterface: show access
+    LoginInterface --> User: Logged in
+else Wrong password
+    UserService --> UserController: wrong password
+    UserController --> LoginInterface: user null (suggest forgot password)
+    LoginInterface --> User: Password incorrect - forgot password?
+end
+
+== Forgot Password ==
+User -> LoginInterface: Forgot password request
+LoginInterface -> UserController: forgotPassword(updateUTO)
+UserController -> UserService: processPasswordReset(updateDTO)
+UserService -> UserRepository: updateInfo(updateDTO)
+UserRepository -> SQLDatabase: query user
+SQLDatabase --> UserRepository: user found
+UserRepository --> UserService: user data
+UserService --> UserController: send reset email
+UserController --> LoginInterface: confirmation
+LoginInterface --> User: Reset email sent
+
+== Register ==
+User -> LoginInterface: Register(User)
+LoginInterface -> UserController: register(User)
+UserController -> UserService: addUser(User)
+UserService -> UserRepository: findByEmail(email    )
+UserRepository -> SQLDatabase: query user
+SQLDatabase --> UserRepository: no user
+UserRepository --> UserService: user not found
+UserService -> UserRepository: save new user
+UserRepository -> SQLDatabase: insert new user
+SQLDatabase --> UserRepository: inserted
+UserRepository --> UserService: confirmation
+UserService --> UserController: registration success
+UserController --> LoginInterface: show success
+LoginInterface --> User: Registration complete
+
+== Guest Access ==
+User -> LoginInterface: Enter as Guest
+LoginInterface --> UserController: guestAccess()
+UserController --> LoginInterface: proceed without auth
+LoginInterface --> User: Guest access granted
+
+@enduml

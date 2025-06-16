@@ -1,0 +1,86 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam classAttributeIconSize 0
+
+' == ENUM ==
+enum Gender {
+    MALE
+    FEMALE
+    NO_SPECIFIC
+}
+
+' == ABSTRACT CLASS ==
+abstract class Notebook {
+    + Long id
+    + String notebookName
+    + User user
+    + String notes
+}
+
+' == CLASSES ==
+class User {
+    - String firstName
+    - String lastName
+    - String email
+    - String password
+    - Integer age
+    - Gender gender
+    - String role
+    + Long id
+    + List<Notebook> notebooks
+    + List<GroupChat> groupChats
+}
+
+class MyNotebook {
+    - String resolution
+    - Date date
+}
+
+class SmartNotebook {
+    - List<String> response
+}
+
+class Achievement {
+    - Integer number
+    - String name
+    - Date date
+    + Long id
+    + List<User> user
+}
+
+class Archive {
+    - String title
+    - Date date
+    - List<String> analyzeResponse
+    - Notebook notebook
+}
+
+class GroupChat {
+    - Long id
+    - String name
+    + List<Message> messages
+    + List<User> users
+}
+
+class Message {
+    - Long id
+    - String message
+    - String sender
+    - Timestamp timestamp
+    + GroupChat group
+}
+
+
+
+Notebook <|-- MyNotebook
+Notebook <|-- SmartNotebook
+Notebook "1" -- "many" User : belongsTo >
+User "1" -- "many" Notebook : owns >
+User "many" <--> "many" GroupChat : participates >
+GroupChat "1" -- "many" Message : has >
+Message "1" -- "1" GroupChat : belongsTo >
+User "many" -- "1" Gender : has >
+Achievement "many" <--> "many" User : earnedBy >
+
+@enduml

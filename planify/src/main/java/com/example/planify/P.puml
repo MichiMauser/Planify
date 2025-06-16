@@ -1,0 +1,86 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam componentStyle rectangle
+
+'== Packages ==
+
+package "Service" {
+    [User Service]
+    [Notebook Service]
+    [Achievement Service]
+    [GroupChat Service]
+    [Message Service]
+}
+
+package "Service Impl" {
+    [User Service Impl]
+    [Notebook Service Impl]
+    [Achievement Service Impl]
+    [GroupChat Service Impl]
+    [Message Service Impl]
+}
+
+package "Controller" {
+    [Achievement Controller]
+    [Notebook Controller]
+    [User Controller]
+    [GroupChat Controller]
+    [Message Controller]
+}
+
+package "Model" {
+    [Achievement Model]
+    [Archive Model]
+    [Notebook Model]
+    [MyNotebook Model]
+    [SmartNotebook Model]
+    [User Model]
+    [GroupChat Model]
+    [Message Model]
+}
+
+package "Repository" {
+    [Achievement Repository]
+    [Notebook Repository]
+    [User Repository]
+    [GroupChat Repository]
+    [Message Repository]
+}
+
+package "DTO" {
+    [LoginDTO]
+    [UserDTO]
+    [UserUpdateDTO]
+}
+
+package "Exceptions" {
+    [ControllerExceptionsHandler]
+    [APIExceptionResponse]
+}
+
+package "Validator" {
+    [PasswordCheck]
+    [PasswordCheckValidator]
+}
+
+package "WebSecurity" {
+    [WebSecurityConfig]
+}
+
+package "WebSockets" {
+    [WebSocketConfig]
+}
+
+
+
+"Controller" ..> "Service"
+"Service" ..> "Repository"
+"Service" ..> "Model"
+"Controller" ..> "DTO"
+"Exceptions" ..> "Service"
+"Validator" ..> "Model"
+"Validator" ..> "DTO"
+"WebSockets" ..> "Service"
+"WebSecurity" ..> "Service"
+
+@enduml

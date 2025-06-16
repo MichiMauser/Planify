@@ -1,0 +1,78 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Users List</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-black bg-black">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="/user">
+      <img th:src="@{/images/icon.png}" alt="Planify Logo" width="40" height="40" class="d-inline-block align-text-top">
+      Planify  Digital Diary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+<!--          <button class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#ownerModal">-->
+<!--            Add Notebook-->
+<!--          </button>-->
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <!-- Users Table -->
+  <table class="table table-striped">
+    <thead class="table-blue">
+    <tr>
+      <th>Id</th>
+      <th>Notebook Name</th>
+      <th>Resolution</th>
+      <th>date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="notebook : ${notebooks}">
+      <td th:text="${notebook.id}"></td>
+      <td th:text="${notebook.notebookName}"></td>
+      <td th:text="${notebook instanceof T(com.example.planify.model.MyNotebook) ? notebook.resolution : ''}"></td>
+      <td th:text="${notebook instanceof T(com.example.planify.model.MyNotebook) ? notebook.date : ''}"></td>
+      <td>
+<!--        <a th:href="@{/notebooks}" class="btn btn-info btn-sm">View</a>-->
+        <!-- Delete Form -->
+<!--        <form th:action="@{/user/delete/{id}(id=${user.id})}" method="post" style="display:inline;">-->
+<!--          <button type="submit" class="btn btn-danger btn-sm"-->
+<!--                  onclick="return confirm('Are you sure you want to delete this user?');">-->
+<!--            Delete-->
+<!--          </button>-->
+<!--        </form>-->
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<!--<script>-->
+<!--    function fillModalData(button) {-->
+<!--        const id = button.getAttribute("data-bs-id");-->
+<!--        const name = button.getAttribute("data-bs-name");-->
+
+<!--        document.getElementById("userId").value = id || "";-->
+<!--        document.getElementById("usName").value = name || "";-->
+
+<!--        document.getElementById("modalTitle").textContent = id ? "Edit Owner" : "Create Owner";-->
+
+<!--    }-->
+<!--</script>-->
+
+</body>
+</html>

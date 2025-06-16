@@ -1,0 +1,96 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Detail</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-black bg-black">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="/user">
+            <img th:src="@{/images/icon.png}" alt="Planify Logo" width="40" height="40" class="d-inline-block align-text-top">
+            Planify  Digital Diary</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container mt-4">
+    <h2>User Detail</h2>
+    <div>
+        <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
+        <p><strong>First Name:</strong> <span th:text="${user.firstName}"></span></p>
+        <p><strong>Last Name:</strong> <span th:text="${user.lastName}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+        <p><strong>Age:</strong> <span th:text="${user.age}"></span></p>
+        <p><strong>Gender:</strong> <span th:text="${user.gender}"></span></p>
+    </div>
+
+    <h3>Notebooks</h3>
+    <table class="table table-striped">
+        <thead class="table-blue">
+        <tr>
+            <th>Notebook Name</th>
+            <th>Notes</th>
+            <th>Resolution</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="notebook : ${notebooks}">
+            <td th:text="${notebook.notebookName}"></td>
+            <td th:text="${notebook.notes}"></td>
+            <td th:text="${notebook.resolution}"></td>
+            <td th:text="${#dates.format(notebook.date, 'yyyy-MM-dd')}"></td>
+            <td>
+
+                <form th:action="@{/notebooks/delete/{notebookName}/{id}(notebookName=${notebook.notebookName}, id=${user.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure you want to delete this notebook?');">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Achievements</h3>
+    <table class="table table-striped">
+        <thead class="table-blue">
+        <tr>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="achievement : ${user.achievements}">
+            <td th:text="${achievement.name}"></td>
+            <td th:text="${achievement.number}"></td>
+            <td th:text="${#dates.format(achievement.date, 'yyyy-MM-dd')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Include the modal fragment -->
+<div th:replace="fragments/deleteModal :: deleteModal"></div>
+
+<script>
+    // No need for JavaScript here anymore, since delete is handled by the form's action
+</script>
+
+</body>
+</html>

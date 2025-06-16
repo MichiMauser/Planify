@@ -1,0 +1,24 @@
+@startuml
+' https://plantuml.com/deployment-diagram
+
+node "Client Machine" {
+    [Web Browser]
+}
+
+node "App Server (Main)" {
+    [Application Server App]
+}
+
+node "App Server (Achievement)" {
+    [Achievement Server App]
+}
+
+database "MySQL Database" as DB
+
+[Web Browser] --> [Application Server App] : http://localhost:8080
+[Web Browser] --> [Achievement Server App] : http://localhost:8081
+
+[Application Server App] --> DB
+[Achievement Server App] --> DB
+
+@enduml

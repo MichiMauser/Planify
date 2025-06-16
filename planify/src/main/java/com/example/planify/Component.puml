@@ -1,0 +1,48 @@
+@startuml
+' https://plantuml.com/component-diagram
+
+skinparam componentStyle rectangle
+
+rectangle Frontend {
+    component "Web Interface"
+}
+
+
+rectangle "Application Server App" {
+    rectangle "Business Logic Layer" {
+        component "User Controller"
+        component "Notebook Controller"
+        component "Message Controller"
+        component "GroupChat Controller"
+    }
+    rectangle "Application Layer" {
+        component "User Service"
+        component "Notebook Service"
+        component "Message Service"
+        component "GroupChat Service"
+    }
+    rectangle "Data Layer" {
+        component "User Repository"
+        component "Notebook Repository"
+        component "Message Repository"
+        component "GroupChat Repository"
+    }
+}
+
+
+rectangle "Achievement Server App" {
+    rectangle "Business Logic Layer" {
+        component "Achievement Controller"
+    }
+    rectangle "Application Layer" {
+        component "Achievement Service"
+    }
+    rectangle "Data Layer" {
+        component "Achievement Repository"
+    }
+}
+
+Frontend --> "Application Server App" : http://localhost:8080
+Frontend --> "Achievement Server App" : http://localhost:8081
+
+@enduml

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<userDTO>
+    <firstName>test</firstName>
+    <lastName>admin</lastName>
+    <email>admin@gmail.com</email>
+    <password>parola12@</password>
+    <age>30</age>
+    <gender>MALE</gender>
+    <role>admin</role>
+</userDTO>

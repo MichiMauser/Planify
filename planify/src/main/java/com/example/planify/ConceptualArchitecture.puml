@@ -1,0 +1,68 @@
+@startuml
+skinparam componentStyle rectangle
+
+rectangle "Frontend" {
+    [Web Interface]
+}
+
+rectangle "Presentation Layer" {
+    [Achievement Controller]
+    [Notebook Controller]
+    [User Controller]
+    [Message Controller]
+    [GroupChat Controller]
+}
+
+rectangle "Application Layer" {
+    [Achievement Service]
+    [Notebook Service]
+    [User Service]
+    [Message Service]
+    [GroupChat Service]
+}
+
+rectangle "Data Layer" {
+    [Achievement Repository]
+    [Notebook Repository]
+    [User Repository]
+    [Message Repository]
+    [GroupChat Repository]
+}
+
+rectangle "JPA Layer" {
+    [JPA EntityManager]
+}
+
+rectangle "Hibernate ORM" {
+    [Hibernate Core]
+}
+
+database SQLDatabase
+
+"Frontend" --> "Presentation Layer" : Http Request
+"Presentation Layer" <--> "Frontend" : Http Response
+"Presentation Layer" <--> "Application Layer"
+"Application Layer" <--> "Data Layer"
+
+"Data Layer" --> "JPA Layer"
+"JPA Layer" --> "Hibernate ORM"
+"Hibernate ORM" --> SQLDatabase
+
+[User Controller] --> [User Service]
+[User Controller] --> [Notebook Service]
+
+[Notebook Controller] --> [User Service]
+[Notebook Controller] --> [Notebook Service]
+
+[Achievement Controller] --> [User Service]
+[Achievement Controller] --> [Notebook Service]
+[Achievement Controller] --> [Achievement Service]
+
+[Message Controller] --> [Message Service]
+[Message Controller] --> [User Service]
+[Message Controller] --> [GroupChat Service]
+
+[GroupChat Controller] --> [GroupChat Service]
+[GroupChat Controller] --> [User Service]
+
+@enduml
